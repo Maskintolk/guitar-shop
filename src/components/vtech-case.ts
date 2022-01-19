@@ -53,7 +53,8 @@ const styles = css`
   .pagination {
     width: 100%;
     margin-top: 30px;
-    text-align: center;
+    text-align: right;
+    padding-right: 1000px;
   }
 `;
 
@@ -120,6 +121,9 @@ class CaseElement extends LitElement {
   }
 
   protected async firstUpdated(_changedProperties: Map<string | number | symbol, unknown>): void {
+
+    // Listen for changes to the filters. This will trigger for both the filter list
+    // and the filter summary
     document.addEventListener('vtech-filtering-changed', this.filterChanged.bind(this));
     document.addEventListener('vtech-pagination-changed', this.paginationChanged.bind(this));
     
@@ -129,7 +133,12 @@ class CaseElement extends LitElement {
       .map(manufacturer => {
         return {
           name: manufacturer.name,
+
+          // Start out with all filters de-selected
           isActive: false,
+
+          // NB! This count doesn't match the actual count of products found in the dataset.
+          // But keep it here for the purpose of showing it in the UI
           count: manufacturer.count
         };
       });
