@@ -33,6 +33,13 @@ const styles = css`
   .img-logo {
     width: 48px;
     height: 32px;
+    padding-right: 10px;
+  }
+  .logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -62,7 +69,7 @@ class ProductCardElement extends LitElement {
     <div class="card">
       <img class="img" src="${imagePathGuitar}">
       <div class="info">
-        ${imageManufacturer}
+        <div class="logo">${imageManufacturer} ${this.product?.manufacturer.name}</div>
         <h2>${this.product?.name}</h2>
         <p>${unsafeHTML(this.product?.description)}</p>
       </div>
