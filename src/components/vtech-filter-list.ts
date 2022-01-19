@@ -71,6 +71,9 @@ class FilterListElement extends LitElement {
 
   protected updated(_changedProperties: Map<string | number | symbol, unknown>): void {
     this.removeEventListeners();
+
+    // Adding a Lit @click event makes it fire twice when checking the checkbox for some reason!?
+    // So use addEventListener instead
     const listElement = this.shadowRoot?.querySelectorAll('sl-checkbox');
     if (listElement) {
       listElement.forEach(elm => 

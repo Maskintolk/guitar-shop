@@ -108,17 +108,15 @@ class CaseElement extends LitElement {
   }
 
   protected showProductList(page: number) {
-    const products = this.service.getProducts(this.filters);
-    const pageCount = Math.floor(products.length / this.pageSize);
+    const [products, pageCount, productCount] = this.service.getProducts(this.filters, this.page, this.pageSize);
     
     // Set page and page counts
     this.page = page;
     this.pageCount = products.length % this.pageSize === 0 ? pageCount : pageCount + 1;
-    this.productCount = products.length;
+    this.productCount = productCount;
 
     // Set list of products for current page
-    const startPos = (page - 1) * this.pageSize;
-    this.products = products.slice(startPos, startPos + this.pageSize);
+    this.products = products;
   }
 
   protected async firstUpdated(_changedProperties: Map<string | number | symbol, unknown>): void {

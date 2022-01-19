@@ -36,16 +36,24 @@ export class GuitarService {
     return allData['manufacturers'];
   }
 
-  getProducts(filters: FilterType[]): ProductType[] {
+  getProducts(filters: FilterType[], page: number, pageSize: number): [ProductType[], number, number] {
     const selectedManufactorers = 
       filters
         .filter(filter => filter.isActive)
         .map(filter => filter.name.toLowerCase());
+
+    let products = this.products;
     
     if (selectedManufactorers.length > 0) {
-      return this.products.filter(product => selectedManufactorers.includes(product.manufacturer.name.toLowerCase()));
+      products = this.products.filter(product => selectedManufactorers.includes(product.manufacturer.name.toLowerCase()));
     }
 
-    return this.products;
+    const pageCount = Math.floor(products.length / pageSize);
+    const startPos = (page - 1) * pageSize;
+    const productCount = products.length;
+    
+    products = products.slice(startPos, startPos + pageSize);
+    
+    return [products, pageCount, productCount];
   }
 }
