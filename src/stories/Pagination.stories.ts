@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/web-components';
 import { Pagination, PaginationProps } from './Pagination';
 
 export default {
-  title: 'Valtech/Pagination',
+  title: 'guitar/Pagination',
 } as Meta;
 
 const Template: Story<Partial<PaginationProps>> = (args) => Pagination(args);

@@ -4,7 +4,7 @@ import { FilterSummary, FilterList, FilterProps } from './FilterSummary';
 import { FilterType } from '../types/FilterType';
 
 export default {
-  title: 'Valtech/Filtering',
+  title: 'guitar/Filtering',
 } as Meta;
 
 const FilterSummaryTemplate: Story<Partial<FilterProps>> = (args) => FilterSummary(args);

@@ -4,7 +4,7 @@ import { Case, CaseProps } from './Case';
 import { FilterType } from '../types/FilterType';
 
 export default {
-  title: 'Valtech/Case',
+  title: 'guitar/Case',
 } as Meta;
 
 const Template: Story<Partial<CaseProps>> = (args) => Case(args);

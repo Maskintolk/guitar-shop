@@ -5,7 +5,7 @@ import { ProductType } from '../types/ProductType';
 import { allData } from './productsdata';
 
 export default {
-  title: 'Valtech/Products',
+  title: 'guitar/Products',
 } as Meta;
 
 const ProductListTemplate: Story<Partial<ProductListProps>> = (args) => ProductList(args);
