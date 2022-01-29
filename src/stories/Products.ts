@@ -2,15 +2,15 @@ import { html } from 'lit-html';
 
 import { ProductType } from '../types/ProductType';
 
-import '../components/vtech-product-list';
-import '../components/vtech-product-card';
+import '../components/guitar-product-list';
+import '../components/guitar-product-card';
 
 export interface ProductListProps {
   products: ProductType[]
 }
 
 export const ProductList = ({products}) => html`
-  <vtech-product-list .products=${products}></vtech-product-list>
+  <guitar-product-list .products=${products}></guitar-product-list>
 `;
 
 export interface ProductProps {
@@ -18,5 +18,5 @@ export interface ProductProps {
 }
 
 export const ProductCard = ({product}) => html`
-  <vtech-product-card .product=${product}></vtech-product-card>
+  <guitar-product-card .product=${product}></guitar-product-card>
 `;

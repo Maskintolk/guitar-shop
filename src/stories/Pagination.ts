@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 
-import '../components/vtech-pagination';
+import '../components/guitar-pagination';
 
 export interface PaginationProps {
   page: number;
@@ -8,5 +8,5 @@ export interface PaginationProps {
 }
 
 export const Pagination = ({page, pageCount}) => html`
-  <vtech-pagination page="${page}" pagecount="${pageCount}"></vtech-pagination>
+  <guitar-pagination page="${page}" pagecount="${pageCount}"></guitar-pagination>
 `;

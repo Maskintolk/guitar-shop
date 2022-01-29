@@ -5,10 +5,10 @@ import { ProductType } from "../types/ProductType";
 import { FilterType } from '../types/FilterType';
 import { GuitarService } from '../services/guitar-service';
 
-import './vtech-filter-list';
-import './vtech-product-list';
-import './vtech-filter-summary';
-import './vtech-pagination';
+import './guitar-filter-list';
+import './guitar-product-list';
+import './guitar-filter-summary';
+import './guitar-pagination';
 
 const styles = css`
   .grid {
@@ -58,15 +58,15 @@ const styles = css`
   }
 `;
 
-@customElement('vtech-case')
+@customElement('guitar-case')
 class CaseElement extends LitElement {
   static styles = styles;
 
   constructor() {
     super();
 
-    this.addEventListener('vtech-filtering-changed', this.filterChanged.bind(this));
-    this.addEventListener('vtech-pagination-changed', this.paginationChanged.bind(this));
+    this.addEventListener('guitar-filtering-changed', this.filterChanged.bind(this));
+    this.addEventListener('guitar-pagination-changed', this.paginationChanged.bind(this));
   }
 
   private service: GuitarService = new GuitarService();
@@ -156,31 +156,31 @@ class CaseElement extends LitElement {
     <div class="grid">
       <div class="filter-list">
         <h3>Filters</h3>
-        <vtech-filter-list .filters=${[...this.filters]}></vtech-filter-list>
+        <guitar-filter-list .filters=${[...this.filters]}></guitar-filter-list>
       </div>
       <div class="filter-summary">
-        <vtech-filter-summary .filters=${[...this.filters]}></vtech-filter-summary>
+        <guitar-filter-summary .filters=${[...this.filters]}></guitar-filter-summary>
         <div>Found ${this.productCount} guitars</div>
       </div>
       <div class="product-list">
-        <vtech-product-list .products=${this.products}></vtech-product-list>
+        <guitar-product-list .products=${this.products}></guitar-product-list>
       </div>
     </div>
     <div class="pagination">
-      <vtech-pagination page="${this.page}" pagecount="${this.pageCount}"></vtech-pagination>
+      <guitar-pagination page="${this.page}" pagecount="${this.pageCount}"></guitar-pagination>
     </div>
     `;
   }
 
   disconnectedCallback() {
-    this.removeEventListener('vtech-filtering-changed', this.filterChanged.bind(this));
-    this.removeEventListener('vtech-pagination-changed', this.paginationChanged.bind(this));
+    this.removeEventListener('guitar-filtering-changed', this.filterChanged.bind(this));
+    this.removeEventListener('guitar-pagination-changed', this.paginationChanged.bind(this));
     super.disconnectedCallback();
   }  
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vtech-case': CaseElement;
+    'guitar-case': CaseElement;
   }
 }

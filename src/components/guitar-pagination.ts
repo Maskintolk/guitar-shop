@@ -8,7 +8,7 @@ const styles = css`
   }
 `;
 
-@customElement('vtech-pagination')
+@customElement('guitar-pagination')
 class PaginationElement extends LitElement {
   static styles = styles;
 
@@ -41,7 +41,7 @@ class PaginationElement extends LitElement {
     };
 
     const event = new CustomEvent(
-      'vtech-pagination-changed',
+      'guitar-pagination-changed',
       {
         composed: true,
         detail: detail
@@ -88,6 +88,6 @@ class PaginationElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vtech-pagination': PaginationElement;
+    'guitar-pagination': PaginationElement;
   }
 }

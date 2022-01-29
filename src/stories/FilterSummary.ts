@@ -1,7 +1,7 @@
 import { html } from 'lit-html';
 
-import '../components/vtech-filter-summary';
-import '../components/vtech-filter-list';
+import '../components/guitar-filter-summary';
+import '../components/guitar-filter-list';
 
 import { FilterType } from '../types/FilterType';
 
@@ -11,10 +11,10 @@ export interface FilterProps {
 }
 
 export const FilterSummary = ({filters}) => html`
-  <vtech-filter-summary .filters="${filters}"></vtech-filter-summary>
+  <guitar-filter-summary .filters="${filters}"></guitar-filter-summary>
 `;
 
 export const FilterList = ({filters, orientation}) => html`
-  <vtech-filter-list orientation="${orientation}" .filters="${filters}"></vtech-filter-list>
+  <guitar-filter-list orientation="${orientation}" .filters="${filters}"></guitar-filter-list>
 `;
 

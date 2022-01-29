@@ -3,7 +3,7 @@ import { map } from 'lit/directives/map.js';
 import { customElement, property } from 'lit/decorators.js';
 
 import { ProductType } from '../types/ProductType';
-import './vtech-product-card';
+import './guitar-product-card';
 
 const styles = css`
   div {
@@ -16,7 +16,7 @@ const styles = css`
   }
 `;
 
-@customElement('vtech-product-list')
+@customElement('guitar-product-list')
 class ProductListElement extends LitElement {
   static styles = styles;
 
@@ -38,8 +38,8 @@ class ProductListElement extends LitElement {
     return html`
     <div>
       ${map(this.products, (product) => html`
-        <vtech-product-card .product=${product}>
-        </vtech-product-card>
+        <guitar-product-card .product=${product}>
+        </guitar-product-card>
       `)}
     </div>
     `;
@@ -48,6 +48,6 @@ class ProductListElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vtech-product-list': ProductListElement;
+    'guitar-product-list': ProductListElement;
   }
 }

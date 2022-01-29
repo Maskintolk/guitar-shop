@@ -43,7 +43,7 @@ const styles = css`
   }
 `;
 
-@customElement('vtech-product-card')
+@customElement('guitar-product-card')
 class ProductCardElement extends LitElement {
   static styles = styles;
 
@@ -83,6 +83,6 @@ class ProductCardElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vtech-product-card': ProductCardElement;
+    'guitar-product-card': ProductCardElement;
   }
 }

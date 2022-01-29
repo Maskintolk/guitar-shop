@@ -26,7 +26,7 @@ const styles = css`
   }
 `;
 
-@customElement('vtech-filter-list')
+@customElement('guitar-filter-list')
 class FilterListElement extends LitElement {
   static styles = styles;
 
@@ -48,7 +48,7 @@ class FilterListElement extends LitElement {
 
   private notifyListeners() {
     const event = new CustomEvent(
-      'vtech-filtering-changed',
+      'guitar-filtering-changed',
       {
         composed: true,
         detail: {
@@ -85,6 +85,6 @@ class FilterListElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vtech-filter-list': FilterListElement;
+    'guitar-filter-list': FilterListElement;
   }
 }
