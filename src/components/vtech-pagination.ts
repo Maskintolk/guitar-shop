@@ -43,10 +43,11 @@ class PaginationElement extends LitElement {
     const event = new CustomEvent(
       'vtech-pagination-changed',
       {
+        composed: true,
         detail: detail
       }
     );
-    document.dispatchEvent(event);
+    this.dispatchEvent(event);
   }
 
   protected update(changedProperties: Map<string | number | symbol, unknown>): void {

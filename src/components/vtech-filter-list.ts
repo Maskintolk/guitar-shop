@@ -41,8 +41,6 @@ class FilterListElement extends LitElement {
       const filter = this.filters.find(filter => filter.name === e.target.id);
       if (filter) {
         filter.isActive = e.target.checked;
-
-        // Use event dispatching to alert other components of changes
         this.notifyListeners();
       }    
     }
@@ -52,14 +50,14 @@ class FilterListElement extends LitElement {
     const event = new CustomEvent(
       'vtech-filtering-changed',
       {
-        bubbles: true,
+        composed: true,
         detail: {
           id: this.id,
           filters: this.filters,
         }
       }
     );
-    document.dispatchEvent(event);
+    this.dispatchEvent(event);
   }
 
   protected update(changedProperties: Map<string | number | symbol, unknown>): void {
@@ -69,23 +67,12 @@ class FilterListElement extends LitElement {
     super.update(changedProperties);
   }
 
-  protected updated(_changedProperties: Map<string | number | symbol, unknown>): void {
-    this.removeEventListeners();
-
-    // Adding a Lit @click event makes it fire twice when checking the checkbox for some reason!?
-    // So use addEventListener instead
-    const listElement = this.shadowRoot?.querySelectorAll('sl-checkbox');
-    if (listElement) {
-      listElement.forEach(elm => 
-        elm.addEventListener('sl-change', this.filterClicked.bind(this)));
-    }
-  }
-
   render() {
     return html`
       ${map(this.filters, (filter) => html`
         <sl-tooltip content="Add or remove filter">
           <sl-checkbox class=${classMap({ selected: filter.isActive })}
+            @sl-change="${this.filterClicked}"
             id="${filter.name}"
             ?checked=${filter.isActive}>
             ${filter.name} (${filter.count})
@@ -93,18 +80,6 @@ class FilterListElement extends LitElement {
         </sl-tooltip>
       `)}
     `;
-  }
-
-  disconnectedCallback() {
-    this.removeEventListeners();
-  }
-  
-  private removeEventListeners() {
-    const listElement = this.shadowRoot?.querySelectorAll('sl-checkbox');
-    if (listElement) {
-      listElement.forEach(elm => 
-        elm.removeEventListener('sl-change', this.filterClicked.bind(this)));
-    }
   }
 }
 

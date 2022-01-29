@@ -62,6 +62,13 @@ const styles = css`
 class CaseElement extends LitElement {
   static styles = styles;
 
+  constructor() {
+    super();
+
+    this.addEventListener('vtech-filtering-changed', this.filterChanged.bind(this));
+    this.addEventListener('vtech-pagination-changed', this.paginationChanged.bind(this));
+  }
+
   private service: GuitarService = new GuitarService();
 
   @property({type: Array})
@@ -121,12 +128,6 @@ class CaseElement extends LitElement {
   }
 
   protected async firstUpdated(_changedProperties: Map<string | number | symbol, unknown>): void {
-
-    // Listen for changes to the filters. This will trigger for both the filter list
-    // and the filter summary
-    document.addEventListener('vtech-filtering-changed', this.filterChanged.bind(this));
-    document.addEventListener('vtech-pagination-changed', this.paginationChanged.bind(this));
-    
     if (this.filters === null || this.filters === undefined || (Array.isArray(this.filters) && this.filters.length === 0)) {
       // Load list of manufacturers for filtering
       this.filters = this.service.getManufacturers()
@@ -172,8 +173,9 @@ class CaseElement extends LitElement {
   }
 
   disconnectedCallback() {
-    document.removeEventListener('vtech-filtering-changed', this.filterChanged.bind(this));
-    document.removeEventListener('vtech-pagination-changed', this.paginationChanged.bind(this));
+    this.removeEventListener('vtech-filtering-changed', this.filterChanged.bind(this));
+    this.removeEventListener('vtech-pagination-changed', this.paginationChanged.bind(this));
+    super.disconnectedCallback();
   }  
 }
 

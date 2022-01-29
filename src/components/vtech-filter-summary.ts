@@ -41,8 +41,6 @@ class FilterSummaryElement extends LitElement {
 
   protected summaryClicked(filter: FilterType) {
     filter.isActive = false;
-
-    // Use event dispatching to alert other components of changes
     this.notifyListeners();
   }
 
@@ -50,13 +48,14 @@ class FilterSummaryElement extends LitElement {
     const event = new CustomEvent(
       'vtech-filtering-changed',
       {
+        composed: true,
         detail: {
           id: this.id,
           filters: this.filters,
         }
       }
     );
-    document.dispatchEvent(event);
+    this.dispatchEvent(event);
   }
 
   protected update(changedProperties: Map<string | number | symbol, unknown>): void {
