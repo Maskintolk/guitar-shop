@@ -1,9 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-
-import { ProductType } from "../types/ProductType";
-import { FilterType } from '../types/FilterType';
-import { GuitarService } from '../services/guitar-service';
+import { ProductListController } from '../controllers/product-list-controller';
 
 import './guitar-filter-list';
 import './guitar-product-list';
@@ -59,96 +56,38 @@ const styles = css`
 `;
 
 @customElement('guitar-case')
-class CaseElement extends LitElement {
+export class CaseElement extends LitElement {
   static styles = styles;
 
   constructor() {
     super();
-
     this.addEventListener('guitar-filtering-changed', this.filterChanged.bind(this));
     this.addEventListener('guitar-pagination-changed', this.paginationChanged.bind(this));
   }
 
-  private service: GuitarService = new GuitarService();
-
-  @property({type: Array})
-  products: ProductType[] = [];
-
-  /**
-   * List of filters
-   */
-  @property({type: Array})
-  filters: FilterType[] = [];
+  private productController = new ProductListController(this);
 
   /**
    * Current page being shown
    */
   @property({type: Number, reflect: true})
-  page: number = 1;
-
-  /**
-   * Number of pages in filtered result
-   */
-  @property({type: Number, reflect: true})
-  pageCount: number = 1;
+  public page: number = 1;
 
   /**
    * Number of products to show on each page
    */
   @property({type: Number, reflect: true})
-  pageSize: number = 12;
+  public pageSize: number = 12;
   
-  /**
-   * Number of guitars found in filtered result
-   */
-   private productCount: number = 0;
- 
-   protected filterChanged(e: Event) {
-    // This triggers a re-render which in turn updates the filter list and summary elements
-
+  protected filterChanged(e: Event) {
     // TODO: Only show product list if filters actually changed...
-    this.filters = e.detail.filters;    
-    this.showProductList(1);
+    this.page = 1
+    this.productController.loadProductList(this.page, this.pageSize, e.detail.filters);
   }
 
   protected paginationChanged(e: Event) {
-    this.showProductList(e.detail.page);
-  }
-
-  protected showProductList(page: number) {
-    const [products, pageCount, productCount] = this.service.getProducts(this.filters, this.page, this.pageSize);
-    
-    // Set page and page counts
-    this.page = page;
-    this.pageCount = products.length % this.pageSize === 0 ? pageCount : pageCount + 1;
-    this.productCount = productCount;
-
-    // Set list of products for current page
-    this.products = products;
-  }
-
-  protected async firstUpdated(_changedProperties: Map<string | number | symbol, unknown>): void {
-    if (this.filters === null || this.filters === undefined || (Array.isArray(this.filters) && this.filters.length === 0)) {
-      // Load list of manufacturers for filtering
-      this.filters = this.service.getManufacturers()
-      .map(manufacturer => {
-        return {
-          name: manufacturer.name,
-
-          // Start out with all filters de-selected
-          isActive: false,
-
-          // NB! This count doesn't match the actual count of products found in the dataset.
-          // But keep it here for the purpose of showing it in the UI
-          count: manufacturer.count
-        };
-      });
-    }
-
-    if (this.products === null || this.products === undefined || (Array.isArray(this.products) && this.products.length === 0)) {
-      // Load initial list of products
-      this.showProductList(this.page);
-    }
+    this.page = e.detail.page;
+    this.productController.loadProductList(this.page, this.pageSize, this.productController.filters);
   }
 
   render() {
@@ -156,18 +95,18 @@ class CaseElement extends LitElement {
     <div class="grid">
       <div class="filter-list">
         <h3>Filters</h3>
-        <guitar-filter-list .filters=${[...this.filters]}></guitar-filter-list>
+        <guitar-filter-list .filters=${[...this.productController.filters]}></guitar-filter-list>
       </div>
       <div class="filter-summary">
-        <guitar-filter-summary .filters=${[...this.filters]}></guitar-filter-summary>
-        <div>Found ${this.productCount} guitars</div>
+        <guitar-filter-summary .filters=${[...this.productController.filters]}></guitar-filter-summary>
+        <div>Found ${this.productController.productCount} guitars</div>
       </div>
       <div class="product-list">
-        <guitar-product-list .products=${this.products}></guitar-product-list>
+        <guitar-product-list .products=${this.productController.products}></guitar-product-list>
       </div>
     </div>
     <div class="pagination">
-      <guitar-pagination page="${this.page}" pagecount="${this.pageCount}"></guitar-pagination>
+      <guitar-pagination page="${this.page}" pagecount="${this.productController.pageCount}"></guitar-pagination>
     </div>
     `;
   }

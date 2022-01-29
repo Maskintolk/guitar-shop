@@ -2,7 +2,7 @@ import { ProductType } from "../types/ProductType";
 import { FilterType } from "../types/FilterType";
 import { allData } from './productsdata';
 
-export class GuitarService {
+export class ProductService {
   private products: ProductType[] = [];
 
   constructor() {
